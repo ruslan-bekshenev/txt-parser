@@ -19,21 +19,21 @@ let dashCounter = 0
 for (let i = 0; i < arr.length; i++) {
   const firstChar = arr[i].split('.')[0];
   const currentListNumber = !Number.isNaN(firstChar) ? +firstChar : listNumber;
+  const currentItem = arr[i];
 
-  if (arr[i].match(parentRegex)) {
+  if (currentItem.match(parentRegex)) {
     childCounter = 0;
-    json.push({ id: listNumber, title: arr[i].replace(parentRegex, ''), description: [] });
+    json.push({ id: listNumber, title: currentItem.replace(parentRegex, ''), description: [] });
   } 
 
-  if (arr[i].match(childRegex)) {
+  if (currentItem.match(childRegex)) {
     dashCounter = 0;
-    json[listNumber - 1].description[childCounter] = {  id: childCounter + 1, title: arr[i].replace(childRegex, ''), description: []  };
+    json[listNumber - 1].description[childCounter] = {  id: childCounter + 1, title: currentItem.replace(childRegex, ''), description: []  };
     childCounter++;
   }
 
-  if (arr[i].startsWith('-')) {
-    // console.log('asd', childCounter, json[listNumber - 1].description[childCounter - 1].description);
-    json[listNumber - 1].description[childCounter - 1].description.push(arr[i].replace('- ', ''))
+  if (currentItem.startsWith('-')) {
+    json[listNumber - 1].description[childCounter - 1].description.push(currentItem.replace('- ', ''))
     dashCounter++;
   }
 
